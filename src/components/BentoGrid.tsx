@@ -14,7 +14,7 @@ export default function BentoGrid() {
   const lgY = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
   return (
-    <section ref={container} className="py-24 px-6 md:px-12 max-w-[100rem] mx-auto opacity-90 overflow-hidden">
+    <section ref={container} className="py-24 px-6 md:px-12 max-w-[100rem] mx-auto overflow-hidden">
       <div className="flex flex-col md:flex-row gap-6 mb-6 h-auto md:h-[60vh]">
         
         {/* Large Block */}
@@ -29,8 +29,8 @@ export default function BentoGrid() {
               className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
            />
            <div className="relative z-20 mt-auto">
-             <h3 className="text-4xl md:text-5xl uppercase tracking-tight text-white mix-blend-difference mb-2">Single Origin</h3>
-             <p className="text-white/80 max-w-sm mix-blend-difference">Discover the unique profiles of our Ethiopian Yirgacheffe harvest.</p>
+             <h3 className="text-4xl md:text-5xl uppercase tracking-tight text-white mb-2">Single Origin</h3>
+             <p className="text-white/80 max-w-sm">Discover the unique profiles of our Ethiopian Yirgacheffe harvest.</p>
            </div>
         </motion.div>
 
@@ -51,7 +51,7 @@ export default function BentoGrid() {
         {/* Small Block 2 */}
         <motion.div 
           style={{ y: lgY }}
-          className="w-full md:w-2/5 bg-coffee-400 rounded-[2rem] p-10 flex flex-col justify-between text-background group min-h-[40vh]"
+          className="w-full md:w-2/5 bg-accent rounded-[2rem] p-10 flex flex-col justify-between text-background group min-h-[40vh]"
         >
            <div className="w-12 h-12 rounded-full border border-background/30 flex items-center justify-center group-hover:bg-background group-hover:text-coffee-900 transition-colors">
              <span className="text-xl">↗</span>
@@ -74,7 +74,7 @@ export default function BentoGrid() {
               className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 ease-out"
            />
            <div className="absolute inset-0 z-20 p-10 flex items-center justify-center">
-             <h3 className="text-5xl md:text-7xl uppercase tracking-tighter text-white mix-blend-overlay font-light opacity-50 group-hover:opacity-100 transition-opacity">
+             <h3 className="text-5xl md:text-7xl uppercase tracking-tighter text-white font-light group-hover:opacity-100 transition-opacity">
                Brew Guide
              </h3>
            </div>

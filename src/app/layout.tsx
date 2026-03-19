@@ -8,8 +8,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Tuku - The Experience",
-  description: "Awwwards-level scrollytelling experience for Tuku Coffee",
+  title: "Kedai Cengkar - The Experience",
+  description: "Good feels and great coffee experience for Kedai Cengkar",
 };
 
 export default function RootLayout({

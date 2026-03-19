@@ -73,7 +73,7 @@ export default function Locations() {
 
       // Dark warm tile layer (matching Tuku aesthetic)
       L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         { maxZoom: 19 }
       ).addTo(map);
 
@@ -84,41 +84,48 @@ export default function Locations() {
       L.control.zoom({ position: "bottomright" }).addTo(map);
 
       // Custom marker icon
-      const customIcon = (isActive: boolean) =>
+       const customIcon = (isActive: boolean) =>
         L.divIcon({
           className: "",
           html: `
-            <div style="
-              width: ${isActive ? "20px" : "14px"};
-              height: ${isActive ? "20px" : "14px"};
-              background: ${isActive ? "#c8a96e" : "#7a5c34"};
-              border-radius: 50%;
-              border: 2px solid ${isActive ? "#fff" : "#c8a96e"};
-              transition: all 0.3s ease;
-              box-shadow: 0 0 ${isActive ? "12px" : "6px"} ${isActive ? "#c8a96e88" : "#00000044"};
-            "></div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="${isActive ? 32 : 24}" height="${isActive ? 42 : 32}" viewBox="0 0 32 42">
+              <path d="M16 0C7.163 0 0 7.163 0 16c0 10 16 26 16 26S32 26 32 16C32 7.163 24.837 0 16 0z"
+                fill="${isActive ? "#c8a96e" : "#7a5c34"}"
+                stroke="${isActive ? "#fff" : "#c8a96e"}"
+                stroke-width="2"
+              />
+              <circle cx="16" cy="16" r="6" fill="${isActive ? "#fff" : "#c8a96e88"}" />
+            </svg>
           `,
-          iconSize: [isActive ? 20 : 14, isActive ? 20 : 14],
-          iconAnchor: [isActive ? 10 : 7, isActive ? 10 : 7],
+          iconSize: [isActive ? 32 : 24, isActive ? 42 : 32],
+          iconAnchor: [isActive ? 16 : 12, isActive ? 42 : 32],
         });
-
-      // Add markers
+ 
+      // Add markers + permanent tooltip label
       locations.forEach((loc) => {
         const marker = L.marker([loc.lat, loc.lng], {
           icon: customIcon(loc.id === locations[0].id),
         }).addTo(map);
-
+ 
+        // Permanent label di atas marker
+        marker.bindTooltip(loc.name, {
+          permanent: true,
+          direction: "top",
+          offset: [0, -10],
+          className: "tuku-map-tooltip",
+        });
+ 
         marker.on("click", () => {
           setActiveId(loc.id);
         });
-
+ 
         markersRef.current.push({ id: loc.id, marker, customIcon });
       });
-
+ 
       mapInstanceRef.current = map;
       setMapLoaded(true);
     };
-
+ 
     loadLeaflet();
 
     return () => {
@@ -153,7 +160,7 @@ export default function Locations() {
       className="min-h-screen bg-coffee-950 text-foreground flex flex-col"
     >
       {/* Header */}
-      <div className="px-10 md:px-24 pt-32 pb-10">
+      <div className="px-10 md:px-24 pt-10 pb-10">
         <p className="text-xs tracking-widest uppercase text-coffee-400 mb-3">
           Find Us
         </p>
@@ -163,9 +170,9 @@ export default function Locations() {
       </div>
 
       {/* Split layout */}
-      <div className="flex flex-col md:flex-row flex-1 min-h-[600px]">
+      <div className="flex flex-col md:flex-row flex-1 min-h-[600px] px-10 md:px-24 pb-24 gap-6">
         {/* LEFT — Map */}
-        <div className="relative w-full md:w-2/3 h-[50vh] md:h-auto">
+        <div className="relative w-full md:w-2/3 h-[50vh] md:h-auto rounded-xl overflow-hidden">
           {/* Map loading skeleton */}
           {!mapLoaded && (
             <div className="absolute inset-0 bg-coffee-900 flex items-center justify-center z-10">

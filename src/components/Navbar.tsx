@@ -4,13 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useLenis } from "@studio-freight/react-lenis";
 
 const navLinks = [
-  { title: "Home", href: "/" },
-  { title: "Our Story", href: "/#about" },
-  { title: "Menu", href: "/#menu" },
-  { title: "Locations", href: "/#locations" },
-  { title: "Contact", href: "/#contact" },
+  { title: "Home", href: "/", target: null },
+  { title: "Our Story", href: "/#about", target: "about" },
+  { title: "Menu", href: "/#menu", target: "menu" },
+  { title: "Locations", href: "/#locations", target: "locations" },
+  { title: "Contact", href: "/#contact", target: "contact" },
 ];
 
 const menuVariants = {
@@ -32,6 +33,27 @@ const linkVariants = {
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const lenis = useLenis();
+
+const handleNavClick = (e: React.MouseEvent, target: string | null) => {
+  if (!target) {
+    setIsOpen(false);
+    // Scroll to top untuk Home
+    setTimeout(() => {
+      lenis?.scrollTo(0, { duration: 1.5 });
+    }, 300);
+    return;
+  }
+  e.preventDefault();
+  setIsOpen(false);
+  const el = document.getElementById(target);
+  if (!el || !lenis) return;
+  setTimeout(() => {
+    lenis.scrollTo(el, { offset: 0, duration: 1.5 });
+  }, 300);
+};
+
 
   return (
     <>
@@ -65,7 +87,7 @@ export default function Navbar() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="fixed inset-0 z-30 bg-coffee-900 origin-top flex flex-col justify-center px-10 md:px-24"
+            className="fixed inset-0 z-30 bg-neutral-900 origin-top flex flex-col justify-center px-10 md:px-24"
           >
             <div className="flex flex-col gap-4">
               {navLinks.map((link, i) => (
@@ -80,7 +102,7 @@ export default function Navbar() {
                   >
                     <Link
                       href={link.href}
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => handleNavClick(e, link.target)}
                       className="text-6xl md:text-8xl font-medium tracking-tighter hover:text-accent transition-colors duration-500 uppercase overflow-hidden flex items-center gap-4 group"
                     >
                       <span className="text-sm tracking-widest text-coffee-400 group-hover:text-accent transition-colors">

@@ -37,7 +37,7 @@ export default function SequenceScroll() {
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const numStr = i.toString().padStart(3, "0");
-      img.src = `/sequence/ezgif-frame-${numStr}.jpg`;
+      img.src = `/sequence1/ezgif-frame-${numStr}.jpg`;
       // Keep reference even before loaded so array is ordered correctly
       loadedImages.push(img);
     }
